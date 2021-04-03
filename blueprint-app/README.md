@@ -4,7 +4,7 @@
 
 **problem_to_be_fixed: folder/file_name, linenumber**
 
-* [1] login authetication: components/LoginPage.js
+* [ ] login authetication: components/LoginPage.js
 * [ ] signup & forgot password
 
 # Getting Started with Create React App

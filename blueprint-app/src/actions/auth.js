@@ -102,31 +102,37 @@ export const verifyAuth = () => dispatch => {
 
 
 export const signupWithEmailPassword = (email, password) => {
-  // dispatch(requestLogin());
-  //var user;
   myFirebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
+      //this.logoutUser()
       var user = userCredential.user
-      user.sendEmailVerification()
-    }) 
+      //const{dispatch} = this.props;
+
+      //myFirebase.auth().signOut();
+      
+
+
+    })
+    //.then(myFirebase.auth().signOut())
     .catch(error => {
       //Do something with the error if you want!
       var errorCode = error.code;
       var errorMessage = error.errorMessage;
-      if(errorCode == 'auth/email-already-in-use')
+      if(errorCode === 'auth/email-already-in-use')
       {
           alert("Email Address is already in use")
           return <Redirect to='/login' />
       }
-      else if(errorCode == 'auth/invalid-email')
+      else if(errorCode === 'auth/invalid-email')
       {
           return errorCode;
       }
-      else if(errorCode == 'auth/weak-password')
+      else if(errorCode === 'auth/weak-password')
       {
           return errorCode;
       }
     })
+
 
 
 };

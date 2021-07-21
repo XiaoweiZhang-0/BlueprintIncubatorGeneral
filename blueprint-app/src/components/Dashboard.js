@@ -15,7 +15,8 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { isMobileOnly } from "react-device-detect";
 import { logoutUser } from "../actions";
-import { db } from "../firebase/firebase";
+import { db, myFirebase } from "../firebase/firebase";
+import { Redirect } from "react-router";
 
 
 //CSS styling
@@ -54,6 +55,7 @@ const styles = () => ({
 });
 
 class Dashboard extends Component {
+
   // logsout user
   handleLogout = () => {
     const { dispatch } = this.props;
@@ -73,22 +75,33 @@ class Dashboard extends Component {
   state = {
     anchorEl: null, // anchor for menu, closed by default
     courseList: [], // list of courses
+    emailVerified: false
   };
 
   // Called immediately after a component is mounted. Setting state here will trigger re-rendering.
   componentDidMount() {
+
+    if(!myFirebase.auth().currentUser.emailVerified)
+    {
+      // alert("Signing out...")
+  
+      this.handleLogout();
+      //alert("return to login page");
+      return <Redirect to="/login" />;
+    }
     //receives course data from Firebase and updates courseList in state
-    db.collection("courses").onSnapshot((querySnapshot) => {
+      db.collection("courses").onSnapshot((querySnapshot) => {
       var courses = [];
       querySnapshot.forEach((doc) => {
         courses.push(doc.data());
       });
       this.setState({ courseList: courses });
     });
-  }
+}
 
   render() {
-    const { classes, isLoggingOut, logoutError } = this.props;
+    // alert("hello");
+    const { classes, isLoggingOut, logoutError} = this.props;
     return (
       <div>
         <header>

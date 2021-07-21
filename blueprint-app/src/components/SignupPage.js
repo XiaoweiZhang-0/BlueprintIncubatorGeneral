@@ -9,6 +9,7 @@ import {
   Card,
 } from "@material-ui/core";
 import { signupWithEmailPassword } from "../actions/auth";
+//import { myFirebase } from "../firebase/firebase";
 
 const SignupPage = (props) => {
   //const email_postfix1 = '@scarletmail.rutgers.edu';
@@ -96,9 +97,11 @@ const SignupPage = (props) => {
       } else if (errorCode === "auth/weak-password") {
         setPasswordstrengthCheck(false);
         return renderForm();
-      } else {
-        props.history.push("/dashboard");
       }
+    else {
+        // alert("A verification email has been sent to your email address!");
+        props.history.push("/dashboard");
+       }
     } else {
       return renderForm();
     }

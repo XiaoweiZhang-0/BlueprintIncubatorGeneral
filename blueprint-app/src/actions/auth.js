@@ -102,14 +102,15 @@ export const verifyAuth = () => dispatch => {
 
 
 export const signupWithEmailPassword = (email, password) => {
+  var user;
   myFirebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       //this.logoutUser()
-      var user = userCredential.user
+      user = userCredential.user
       //const{dispatch} = this.props;
 
       //myFirebase.auth().signOut();
-      
+      user.sendEmailVerification()
 
 
     })
@@ -135,6 +136,7 @@ export const signupWithEmailPassword = (email, password) => {
 
 
 
+
 };
 
 
@@ -144,4 +146,15 @@ export const passwordReset = (email) => {
       alert("Please check your email!");
     })
 };
+
+// export const checkEmailVeri = () => {
+//   if(!myFirebase.auth().currentUser.emailVerified)
+//   {
+//     return <Redirect to='login '/>
+//   }
+//   else
+//   {
+//     return true;
+//   }
+// };
 
